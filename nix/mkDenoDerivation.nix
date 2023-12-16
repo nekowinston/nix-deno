@@ -30,4 +30,4 @@ in
       runHook postBuild
     '';
   }
-  // (builtins.removeAttrs args ["buildPhase"]))
+  // (builtins.removeAttrs args ["buildPhase" "buildInputs"]))
