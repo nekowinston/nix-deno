@@ -12,10 +12,8 @@
         buildInputs = [pkgs.deno pkgs.nil pkgs.alejandra];
       };
     });
-    overlays = eachSystem (pkgs: {
-      default = self: super: {
-        denoPlatform = self.callPackage ./nix {};
-      };
-    });
+    overlays.default = self: super: {
+      denoPlatform = self.callPackage ./nix {};
+    };
   };
 }
