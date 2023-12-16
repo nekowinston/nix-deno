@@ -9,7 +9,7 @@
   lockFile ? "${src}/deno.lock",
   configFile ? "${src}/deno.json",
   buildInputs ? [],
-  buildPhase,
+  preConfigure ? "",
   ...
 } @ args:
 stdenv.mkDerivation (let
@@ -17,17 +17,12 @@ stdenv.mkDerivation (let
 in
   {
     buildInputs = [deno] ++ buildInputs;
-    buildPhase = ''
-      runHook preBuild
-
+    preConfigure = ''
       export DENO_DIR=$TMPDIR/deno_cache
       mkdir -p $DENO_DIR
       cp -rL ${prefetchedDenoDir}/* $DENO_DIR/
       chmod -R +w $DENO_DIR
-
-      ${buildPhase}
-
-      runHook postBuild
+      ${preConfigure}
     '';
   }
-  // (builtins.removeAttrs args ["buildPhase" "buildInputs"]))
+  // (builtins.removeAttrs args ["preConfigure" "buildInputs"]))
