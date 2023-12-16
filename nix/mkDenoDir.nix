@@ -76,8 +76,8 @@
                   peerDependencies = packageJson.peerDependencies or {};
                   peerDependenciesMeta = packageJson.peerDependenciesMeta or {};
                   bin = null;
-                  os = [];
-                  cpu = [];
+                  os = packageJson.os or [];
+                  cpu = packageJson.cpu or [];
                   dist = {
                     integrity = data.integrity;
                     shasum = builtins.hashFile "sha1" tarball;
