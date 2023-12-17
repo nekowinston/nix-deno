@@ -1,0 +1,7 @@
+{
+  "version": "3",
+  "remote": {
+    "https://esm.sh/v135/chalk@5.3.0/": "c6d525e5551f7cfac029db68058a4ae44a49dcbc7a5a792850a04e655e8702f9",
+    "https://esm.sh/v135/chalk@5.3.0/denonext/chalk.mjs": "3943aef3775b1bb1c19ed547ef6d4ab66cb3f417595fd1dd70366878607cf9bf"
+  }
+}

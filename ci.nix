@@ -33,6 +33,15 @@ in {
     inherit buildPhase;
   };
 
+  # with esm.sh dependencies
+  esm-simple = pkgs.denoPlatform.mkDenoDerivation {
+    name = "esm-simple";
+
+    src = ./examples/esm-simple;
+
+    inherit buildPhase;
+  };
+
   # Lume project with mixed dependencies
   lume = pkgs.denoPlatform.mkDenoDerivation {
     name = "lume";
