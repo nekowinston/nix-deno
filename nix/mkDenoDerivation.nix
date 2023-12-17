@@ -18,7 +18,7 @@ stdenv.mkDerivation ({
 
     # setting the prefetch direcory for the cache restore hook
     env.DENO_PREFETCH_DIR = denoPlatform.mkDenoDir {inherit lockFile npmRegistryUrl;};
-    env.NPM_REGISTRY_URL = npmRegistryUrl;
+    env.NPM_CONFIG_REGISTRY = npmRegistryUrl;
 
     nativeBuildInputs = [denoPlatform.hooks.denoCacheRestoreHook] ++ nativeBuildInputs;
   }

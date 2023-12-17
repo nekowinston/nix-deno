@@ -28,7 +28,7 @@ in {
 
     src = ./examples/npm-simple-custom-npm-registry;
 
-    npmRegistry = "http://localhost:4873";
+    npmRegistryUrl = "http://localhost:4873";
 
     buildPhase = ''
       ls -l $DENO_DIR/npm/
