@@ -1,4 +1,6 @@
-import color from "npm:chalk";
+// this just checks that we can import the same dependency with different versions successfully
+import color from "npm:chalk@5.3.0";
+import "npm:chalk@5.2.0";
 
 const ascii = [
   color.green("╺┳┓┏━╸┏┓╻┏━┓ ╻  ┏━┓┏┓╻╺┳┓"),
