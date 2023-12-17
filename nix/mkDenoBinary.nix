@@ -14,11 +14,7 @@
 } @ args: let
   compileArgs = builtins.concatStringsSep " " (lib.flatten [
     (map (flag: "--allow-${flag}") allow)
-    (
-      if binaryName
-      then "--output ${binaryName}"
-      else ""
-    )
+    "--output ${binaryName}"
     (
       if unstable
       then "--unstable"
