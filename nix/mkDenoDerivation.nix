@@ -3,28 +3,23 @@
   lib,
   denoPlatform,
   deno,
-}: {
+} @ inputs: {
   src,
   configFile ? "${src}/deno.json",
   lockFile ? "${src}/deno.lock",
   buildInputs ? [],
   nativeBuildInputs ? [],
+  stdenv ? inputs.stdenv,
   ...
 } @ args:
-stdenv.mkDerivation (let
-  inherit (builtins) removeAttrs;
-in
-  {
-    env.DENO_PREFETCH_DIR = denoPlatform.mkDenoDir lockFile;
-
+stdenv.mkDerivation ({
     buildInputs = [deno] ++ buildInputs;
-    nativeBuildInputs = [denoPlatform.hooks.denoCacheRestoreHook] ++ nativeBuildInputs;
 
-    # default to Deno's platforms
-    meta.platforms = deno.meta.platforms;
+    # setting the prefetch direcory for the cache restore hook
+    env.DENO_PREFETCH_DIR = denoPlatform.mkDenoDir lockFile;
+    nativeBuildInputs = [denoPlatform.hooks.denoCacheRestoreHook] ++ nativeBuildInputs;
   }
-  // (removeAttrs args [
+  // (builtins.removeAttrs args [
     "buildInputs"
     "nativeBuildInputs"
-    "meta"
   ]))

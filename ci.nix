@@ -25,6 +25,7 @@ in {
   # Lume project with mixed dependencies
   lume = pkgs.denoPlatform.mkDenoDerivation {
     name = "lume";
+    stdenv = pkgs.stdenvNoCC;
 
     src = ./examples/lume;
 
@@ -36,5 +37,14 @@ in {
       mkdir -p $out
       cp -r _site/* $out
     '';
+  };
+
+  cliffy = pkgs.denoPlatform.mkDenoBinary {
+    name = "cliffy";
+    src = ./examples/cliffy;
+
+    allow = ["all"];
+
+    entryPoint = "main.ts";
   };
 }
