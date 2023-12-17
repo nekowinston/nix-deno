@@ -4,7 +4,6 @@
   writeText,
   fetchurl,
   runCommand,
-  ...
 }: lockfile: (
   linkFarm "deno_cache"
   {
@@ -46,7 +45,7 @@
           inherit (builtins) head match elemAt;
           scopeNameVersion = match "(^@?[[:alnum:]/._-]+)@([[:digit:].]+).*" specifier;
           scopeName = head scopeNameVersion;
-          name = lib.last (builtins.split "/" scopeName);
+          name = builtins.baseNameOf scopeName;
           version = elemAt scopeNameVersion 1;
           tarballUrl = "https://registry.npmjs.org/${scopeName}/-/${name}-${version}.tgz";
           tarball = fetchurl {

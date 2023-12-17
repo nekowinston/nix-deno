@@ -1,11 +1,2 @@
-{
-  pkgs ?
-    import <nixpkgs> {
-      overlays = [
-        (self: super: {
-          denoPlatform = self.callPackage ../../nix {};
-        })
-      ];
-    },
-}:
+{pkgs ? import <nixpkgs> {overlays = [(import ../../nix)];}}:
 pkgs.denoPlatform.mkDenoDir ./deno.lock

@@ -1,5 +1,8 @@
-{pkgs, ...}: rec {
-  mkDenoDir = pkgs.callPackage ./mkDenoDir.nix {};
-  resolveImportMap = pkgs.callPackage ./resolveImportMap.nix {};
-  mkDenoDerivation = pkgs.callPackage ./mkDenoDerivation.nix {inherit mkDenoDir resolveImportMap;};
+final: prev: {
+  denoPlatform = {
+    mkDenoDerivation = final.callPackage ./mkDenoDerivation.nix {};
+    mkDenoDir = final.callPackage ./mkDenoDir.nix {};
+    resolveImportMap = final.callPackage ./resolveImportMap.nix {};
+    hooks = final.callPackage ./hooks {};
+  };
 }

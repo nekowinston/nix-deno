@@ -1,3 +1,9 @@
 {
-  "recommendations": ["denoland.vscode-deno", "jnoortheen.nix-ide"]
+  "recommendations": [
+    "denoland.vscode-deno",
+    "editorconfig.editorconfig",
+    "jnoortheen.nix-ide",
+    "mkhl.shfmt",
+    "timonwong.shellcheck"
+  ]
 }

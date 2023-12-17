@@ -1,13 +1,4 @@
-{
-  pkgs ?
-    import <nixpkgs> {
-      overlays = [
-        (self: super: {
-          denoPlatform = self.callPackage ./nix {};
-        })
-      ];
-    },
-}: let
+{pkgs ? import <nixpkgs> {overlays = [(import ./nix)];}}: let
   buildPhase = ''
     mkdir -p $out
     deno run -A ./main.ts > $out/output.txt

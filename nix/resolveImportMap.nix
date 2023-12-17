@@ -1,9 +1,9 @@
-{lib, ...}: {
+{lib}: {
   src,
-  config,
-  importMap,
+  configFile,
 }: let
-  denoConfig = src + "/${config}";
+  inherit (builtins) head filter pathExists;
+  denoConfig = head (filter (f: pathExists /. + "${f}") [configFile "${src}/deno.jsonc"]);
 in
   if denoConfig.hasKey "importMap"
   then lib.importJSON denoConfig.importMap
