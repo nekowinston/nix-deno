@@ -5,6 +5,7 @@
   fetchurl,
   runCommand,
 }: lockfile: let
+  inherit (lib.strings) sanitizeDerivationName;
   denoLock = lib.importJSON lockfile;
 
   # -> https://deno.land/std@0.118.0/fmt/colors.ts
@@ -19,12 +20,15 @@
   remoteDeps = lib.attrsets.mergeAttrsList (
     lib.mapAttrsToList
     (
-      url: sha256: {
-        "deps/${remoteArtifactPath url}" = builtins.fetchurl {
-          inherit url sha256;
-          name = lib.strings.sanitizeDerivationName (builtins.baseNameOf url);
-        };
-        "deps/${remoteArtifactPath url}.metadata.json" = writeText "metadata.json" (builtins.toJSON {
+      url: sha256: let
+        linkName = remoteArtifactPath url;
+        name = let
+          up = urlPart url;
+        in
+          sanitizeDerivationName (lib.concatStringsSep "-" [(up 1) (lib.strings.removePrefix "/" (up 2))]);
+      in {
+        "deps/${linkName}" = builtins.fetchurl {inherit url sha256 name;};
+        "deps/${linkName}.metadata.json" = writeText "${name}.metadata.json" (builtins.toJSON {
           inherit url;
           headers = {};
         });
@@ -38,26 +42,26 @@
     lib.mapAttrsToList (
       specifier: data: let
         inherit (builtins) head match elemAt;
-        scopeNameVersion = match "(^@?[[:alnum:]/._-]+)@([[:digit:].]+).*" specifier;
-        scopeName = head scopeNameVersion;
-        name = builtins.baseNameOf scopeName;
-        version = elemAt scopeNameVersion 1;
-        tarballUrl = "https://registry.npmjs.org/${scopeName}/-/${name}-${version}.tgz";
+        pkgNameAndVersion = match "(^@?[[:alnum:]/._-]+)@([[:digit:].]+).*" specifier;
+        pkgName = head pkgNameAndVersion;
+        version = elemAt pkgNameAndVersion 1;
+        tarballUrl = "https://registry.npmjs.org/${pkgName}/-/${builtins.baseNameOf pkgName}-${version}.tgz";
+        drvName = sanitizeDerivationName "deno-npm-${pkgName}-${version}";
         tarball = fetchurl {
-          name = lib.strings.sanitizeDerivationName (builtins.baseNameOf tarballUrl);
+          name = "${drvName}.tgz";
           url = tarballUrl;
           hash = data.integrity;
         };
-        unpacked = runCommand (lib.strings.sanitizeDerivationName "deno-npm-${scopeName}-${version}") {} ''
+        unpacked = runCommand drvName {} ''
           mkdir -p $out
           tar -xzf ${tarball} -C $out --strip-components=1
         '';
         packageJson = lib.importJSON "${unpacked}/package.json";
       in {
-        "npm/registry.npmjs.org/${scopeName}/${version}" = unpacked;
-        "npm/registry.npmjs.org/${scopeName}/registry.json" = writeText "registry.json" (builtins.toJSON {
+        "npm/registry.npmjs.org/${pkgName}/${version}" = unpacked;
+        "npm/registry.npmjs.org/${pkgName}/registry.json" = writeText "registry.json" (builtins.toJSON {
           dist-tags.latest = version;
-          name = scopeName;
+          name = pkgName;
           versions = {
             ${version} = {
               dependencies = packageJson.dependencies or {};
