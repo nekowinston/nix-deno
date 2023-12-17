@@ -57,9 +57,7 @@
           tar -xzf ${tarball} -C $out --strip-components=1
         '';
         packageJson = lib.importJSON "${unpacked}/package.json";
-      in {
-        "npm/registry.npmjs.org/${pkgName}/${version}" = unpacked;
-        "npm/registry.npmjs.org/${pkgName}/registry.json" = writeText "registry.json" (builtins.toJSON {
+        registryData = builtins.toJSON {
           dist-tags.latest = version;
           name = pkgName;
           versions = {
@@ -79,7 +77,10 @@
               inherit version;
             };
           };
-        });
+        };
+      in {
+        "npm/registry.npmjs.org/${pkgName}/${version}" = unpacked;
+        "npm/registry.npmjs.org/${pkgName}/registry/${version}.json" = writeText "${drvName}-registry.json" registryData;
       }
     ) (denoLock.packages.npm or {})
   );
