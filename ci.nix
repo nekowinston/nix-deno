@@ -13,22 +13,28 @@ in {
     inherit buildPhase;
   };
 
-  # deno.json `imports` importMap
-  remote-imports = pkgs.denoPlatform.mkDenoDerivation {
-    name = "remote-imports";
-
-    src = ./examples/remote-imports;
-
-    inherit buildPhase;
-  };
-
   # with npm dependencies
   npm-simple = pkgs.denoPlatform.mkDenoDerivation {
     name = "npm-simple";
 
     src = ./examples/npm-simple;
-    lockFile = ./examples/npm-simple/deno.lock;
 
     inherit buildPhase;
+  };
+
+  # Lume project with mixed dependencies
+  lume = pkgs.denoPlatform.mkDenoDerivation {
+    name = "lume";
+
+    src = ./examples/lume;
+
+    buildPhase = ''
+      deno task build
+    '';
+
+    installPhase = ''
+      mkdir -p $out
+      cp -r _site/* $out
+    '';
   };
 }
