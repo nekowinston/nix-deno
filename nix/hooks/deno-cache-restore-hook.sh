@@ -11,8 +11,10 @@ denoRestoreCacheHook() {
 
   if [ -d "$DENO_DIR/npm" ]; then
     echo "Resolving NPM registry.json files"
-    for registryJson in "$DENO_DIR"/npm/*/*/registry/*.json; do
+    shopt -s globstar
+    for registryJson in "$DENO_DIR"/npm/*/**/registry/*.json; do
       dir="$(dirname "$registryJson")"
+      echo "> resolving $dir"
       jq -s 'reduce .[] as $x ({}; . * $x)' "$dir"/*.json >"$dir/../registry.json"
     done
     echo "Finished resolving NPM registry.json files"
