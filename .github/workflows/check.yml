@@ -3,21 +3,29 @@ name: Check Nix expressions
 on:
   push:
     branches: [main]
-    paths: 
-      - "**.nix"
+    paths: ["**.nix"]
   pull_request:
     paths: ["**.nix"]
   workflow_dispatch:
 
 jobs:
-  build:
+  flake-check:
     runs-on: "ubuntu-latest"
+
+    services:
+      verdaccio:
+        image: verdaccio/verdaccio:5
+        ports:
+          - 4873:4873
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            sandbox = true
 
       - uses: DeterminateSystems/magic-nix-cache-action@main
 
-      - run: nix flake check -Lv --option sandbox true
+      - run: nix flake check -Lv

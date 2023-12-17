@@ -4,9 +4,12 @@
   writeText,
   fetchurl,
   runCommand,
-}: lockfile: let
+}: {
+  lockFile,
+  npmRegistryUrl ? "https://registry.npmjs.org",
+}: let
   inherit (lib.strings) sanitizeDerivationName;
-  denoLock = lib.importJSON lockfile;
+  denoLock = lib.importJSON lockFile;
 
   # -> https://deno.land/std@0.118.0/fmt/colors.ts
   # <- ["https" "deno.land" "/std@0.118.0/fmt/colors.ts"]
@@ -45,7 +48,7 @@
         pkgNameAndVersion = match "(^@?[[:alnum:]/._-]+)@([[:digit:].]+).*" specifier;
         pkgName = head pkgNameAndVersion;
         version = elemAt pkgNameAndVersion 1;
-        tarballUrl = "https://registry.npmjs.org/${pkgName}/-/${builtins.baseNameOf pkgName}-${version}.tgz";
+        tarballUrl = "${npmRegistryUrl}/${pkgName}/-/${builtins.baseNameOf pkgName}-${version}.tgz";
         drvName = sanitizeDerivationName "deno-npm-${pkgName}-${version}";
         tarball = fetchurl {
           name = "${drvName}.tgz";
@@ -78,9 +81,10 @@
             };
           };
         };
+        npmRegistryUrlSlug = builtins.replaceStrings [":"] ["_"] (lib.last (builtins.split "//" npmRegistryUrl));
       in {
-        "npm/registry.npmjs.org/${pkgName}/${version}" = unpacked;
-        "npm/registry.npmjs.org/${pkgName}/registry/${version}.json" = writeText "${drvName}-registry.json" registryData;
+        "npm/${npmRegistryUrlSlug}/${pkgName}/${version}" = unpacked;
+        "npm/${npmRegistryUrlSlug}/${pkgName}/registry/${version}.json" = writeText "${drvName}-registry.json" registryData;
       }
     ) (denoLock.packages.npm or {})
   );

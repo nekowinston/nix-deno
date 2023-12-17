@@ -22,6 +22,17 @@ in {
     inherit buildPhase;
   };
 
+  # with npm dependencies
+  npm-simple-custom-npm-registry = pkgs.denoPlatform.mkDenoDerivation {
+    name = "npm-simple-custom-npm-registry";
+
+    src = ./examples/npm-simple;
+
+    npmRegistry = "http://localhost:4873";
+
+    inherit buildPhase;
+  };
+
   # Lume project with mixed dependencies
   lume = pkgs.denoPlatform.mkDenoDerivation {
     name = "lume";
