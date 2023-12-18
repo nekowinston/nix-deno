@@ -3,6 +3,8 @@
     mkdir -p $out
     deno run -A ./main.ts > $out/output.txt
   '';
+  nvfetcher = pkgs.callPackage ./_sources/generated.nix {};
+  esbuild = nvfetcher."esbuild-${pkgs.hostPlatform.system}";
 in {
   # simple imports, following the `deps.ts` convention
   remote-simple = pkgs.denoPlatform.mkDenoDerivation {
@@ -52,8 +54,9 @@ in {
       deno task build
     '';
 
+    env.ESBUILD_BINARY_PATH = "${esbuild.src}/bin/esbuild";
+
     installPhase = ''
-      mkdir -p $out
       cp -r _fresh $out
     '';
   };
