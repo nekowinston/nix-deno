@@ -93,7 +93,7 @@ in {
   };
 
   webview = pkgs.denoPlatform.mkDenoBinary {
-    name = "gui";
+    name = "webview";
     src = ./examples/webview;
 
     permissions.allow = {
