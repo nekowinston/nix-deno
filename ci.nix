@@ -42,6 +42,22 @@ in {
     inherit buildPhase;
   };
 
+  # Fresh project heavily utilizing esm.sh dependencies
+  fresh = pkgs.denoPlatform.mkDenoDerivation {
+    name = "fresh";
+
+    src = ./examples/fresh;
+
+    buildPhase = ''
+      deno task build
+    '';
+
+    installPhase = ''
+      mkdir -p $out
+      cp -r _fresh $out
+    '';
+  };
+
   # Lume project with mixed dependencies
   lume = pkgs.denoPlatform.mkDenoDerivation {
     name = "lume";
