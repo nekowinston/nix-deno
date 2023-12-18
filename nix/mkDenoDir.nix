@@ -4,6 +4,7 @@
   writeText,
   fetchurl,
   runCommand,
+  deno,
 }: {
   lockFile,
   npmRegistryUrl ? "https://registry.npmjs.org",
@@ -29,11 +30,34 @@
           up = urlPart url;
         in
           sanitizeDerivationName (lib.concatStringsSep "-" [(up 1) (lib.strings.removePrefix "/" (up 2))]);
+        assumedContentTypes = {
+          "js" = "application/javascript";
+          "jsx" = "application/javascript";
+          "cjs" = "application/javascript";
+          "mjs" = "application/javascript";
+          "json" = "application/json";
+          "ts" = "application/typescript";
+          "tsx" = "application/typescript";
+          "cts" = "application/typescript";
+          "mts" = "application/typescript";
+          "wasm" = "application/wasm";
+        };
+        assumedContentType = url: let
+          ext = lib.last (builtins.split "\\." url);
+        in
+          if (builtins.hasAttr ext assumedContentTypes)
+          then assumedContentTypes.${ext}
+          else "application/javascript";
       in {
-        "deps/${linkName}" = builtins.fetchurl {inherit url sha256 name;};
+        "deps/${linkName}" = fetchurl {
+          inherit url sha256 name;
+          # some remotes like esm.sh adjust the response based on User-Agent.
+          # emulate Deno's User-Agent to ensure the hashes align.
+          curlOptsList = ["-H" "User-Agent: Deno/${deno.version}"];
+        };
         "deps/${linkName}.metadata.json" = writeText "${name}.metadata.json" (builtins.toJSON {
           inherit url;
-          headers = {};
+          headers."content-type" = assumedContentType url;
         });
       }
     )
