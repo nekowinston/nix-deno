@@ -9,17 +9,6 @@ denoRestoreCacheHook() {
   cp -Lr --reflink=auto -- "$DENO_PREFETCH_DIR" "$DENO_DIR"
   chmod -R +644 -- "$DENO_DIR"
 
-  if [ -d "$DENO_DIR/npm" ]; then
-    echo "Resolving NPM registry.json files"
-    shopt -s globstar
-    for registryJson in "$DENO_DIR"/npm/*/**/registry/*.json; do
-      dir="$(dirname "$registryJson")"
-      echo "> resolving $dir"
-      jq -s 'reduce .[] as $x ({}; . * $x)' "$dir"/*.json >"$dir/../registry.json"
-    done
-    echo "Finished resolving NPM registry.json files"
-  fi
-
   echo "Finished denoRestoreCacheHook"
 }
 
