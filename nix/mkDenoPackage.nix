@@ -38,4 +38,4 @@ in
       # default to Deno's platforms
       meta.platforms = deno.meta.platforms;
     }
-    // args)
+    // (builtins.removeAttrs args ["permissions"]))
