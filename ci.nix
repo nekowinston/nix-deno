@@ -3,6 +3,8 @@
     mkdir -p $out
     deno run -A ./main.ts > $out/output.txt
   '';
+  nvfetcher = pkgs.callPackage ./_sources/generated.nix {};
+  esbuild = nvfetcher."esbuild-${pkgs.hostPlatform.system}";
 in {
   # simple imports, following the `deps.ts` convention
   remote-simple = pkgs.denoPlatform.mkDenoDerivation {
@@ -31,6 +33,32 @@ in {
     npmRegistryUrl = "http://localhost:4873";
 
     inherit buildPhase;
+  };
+
+  # with esm.sh dependencies
+  esm-simple = pkgs.denoPlatform.mkDenoDerivation {
+    name = "esm-simple";
+
+    src = ./examples/esm-simple;
+
+    inherit buildPhase;
+  };
+
+  # Fresh project heavily utilizing esm.sh dependencies
+  fresh = pkgs.denoPlatform.mkDenoDerivation {
+    name = "fresh";
+
+    src = ./examples/fresh;
+
+    buildPhase = ''
+      deno task build
+    '';
+
+    env.ESBUILD_BINARY_PATH = "${esbuild.src}/bin/esbuild";
+
+    installPhase = ''
+      cp -r _fresh $out
+    '';
   };
 
   # Lume project with mixed dependencies
