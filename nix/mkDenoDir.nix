@@ -30,12 +30,25 @@
           up = urlPart url;
         in
           sanitizeDerivationName (lib.concatStringsSep "-" [(up 1) (lib.strings.removePrefix "/" (up 2))]);
-        isEsmShRootDir = url: let
-          check = builtins.match "(^https://esm.sh/v[[:digit:]]+/[[:alnum:]@._-]+/)" url;
+        assumedContentTypes = {
+          ".js" = "application/javascript";
+          ".jsx" = "application/javascript";
+          ".cjs" = "application/javascript";
+          ".mjs" = "application/javascript";
+          ".json" = "application/json";
+          ".ts" = "application/typescript";
+          ".mts" = "application/typescript";
+          ".tsx" = "application/typescript";
+          ".css" = "text/css";
+          ".wasm" = "application/wasm";
+        };
+        isEsmDep = url: lib.hasPrefix "https://esm.sh/" url;
+        assumedContentType = url: let
+          ext = lib.last (builtins.split "\\." url);
         in
-          if (builtins.isList check && builtins.length check == 1)
-          then true
-          else false;
+          if (builtins.hasAttr ext assumedContentTypes)
+          then assumedContentTypes.${ext}
+          else "application/javascript";
       in {
         "deps/${linkName}" = fetchurl {
           inherit url sha256 name;
@@ -46,8 +59,8 @@
         "deps/${linkName}.metadata.json" = writeText "${name}.metadata.json" (builtins.toJSON {
           inherit url;
           headers =
-            if (isEsmShRootDir url)
-            then {"content-type" = "application/javascript";}
+            if (isEsmDep url)
+            then {"content-type" = assumedContentType url;}
             else {};
         });
       }
