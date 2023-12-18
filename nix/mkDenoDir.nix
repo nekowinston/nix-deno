@@ -30,6 +30,12 @@
           up = urlPart url;
         in
           sanitizeDerivationName (lib.concatStringsSep "-" [(up 1) (lib.strings.removePrefix "/" (up 2))]);
+        isEsmShRootDir = url: let
+          check = builtins.match "(^https://esm.sh/v[[:digit:]]+/[[:alnum:]@._-]+/)" url;
+        in
+          if (builtins.isList check && builtins.length check == 1)
+          then true
+          else false;
       in {
         "deps/${linkName}" = fetchurl {
           inherit url sha256 name;
@@ -39,7 +45,10 @@
         };
         "deps/${linkName}.metadata.json" = writeText "${name}.metadata.json" (builtins.toJSON {
           inherit url;
-          headers = {};
+          headers =
+            if (isEsmShRootDir url)
+            then {"content-type" = "application/javascript";}
+            else {};
         });
       }
     )
