@@ -78,11 +78,33 @@ in {
     '';
   };
 
-  cliffy = pkgs.denoPlatform.mkDenoBinary {
+  cliffy-runtime = pkgs.denoPlatform.mkDenoPackage {
+    name = "cliffy-runtime";
+    src = ./examples/cliffy;
+
+    permissions.allow.all = true;
+  };
+
+  cliffy-binary = pkgs.denoPlatform.mkDenoBinary {
     name = "cliffy";
     src = ./examples/cliffy;
 
-    allow = ["all"];
+    permissions.allow.net = "localhost:8080";
+  };
+
+  webview = pkgs.denoPlatform.mkDenoBinary {
+    name = "webview";
+    src = ./examples/webview;
+
+    permissions.allow = {
+      env = ["PLUGIN_URL" "DENO_DIR" "HOME"];
+      ffi = true;
+      net = ["127.0.0.1:8000"];
+      read = true;
+      write = true;
+    };
+    unstable = true;
+    include = ["worker.tsx"];
 
     entryPoint = "main.ts";
   };
