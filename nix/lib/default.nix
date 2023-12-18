@@ -33,12 +33,10 @@
     allow ++ deny;
 
   generateFlags = {
-    entryPoint,
     permissions ? {},
     unstable ? false,
     include ? [],
     additionalDenoArgs ? [],
-    scriptArgs ? [],
   }:
     builtins.concatStringsSep " " (lib.flatten [
       (
@@ -49,7 +47,5 @@
       (builtins.map (import: "--include=" + import) include)
       (fromPermissionsAttrs permissions)
       additionalDenoArgs
-      entryPoint
-      scriptArgs
     ]);
 }

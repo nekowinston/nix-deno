@@ -9,14 +9,14 @@
   entryPoint ? "main.ts",
   binaryName ? name,
   additionalDenoArgs ? [],
+  denoBundle ? false,
   ...
 } @ args: let
   runtimeArgs = denoPlatform.lib.generateFlags {
     inherit permissions unstable additionalDenoArgs;
-    # since we're running a bundled script, the args are passed to the shebang rather than loading an entrypoint from the filesystem.
-    entryPoint = "";
   };
 in
+  # TODO: rework this to use nativebuildinputs / denoPlatform hooks
   denoPlatform.mkDenoDerivation ({
       # TODO: investigate other bundlers like `deno_emit`, since `deno bundle` is deprecated
       buildPhase = ''
