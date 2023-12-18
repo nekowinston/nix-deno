@@ -5,6 +5,7 @@
 }: {
   name,
   permissions ? {},
+  include ? [],
   unstable ? false,
   entryPoint ? "main.ts",
   binaryName ? name,
@@ -13,7 +14,7 @@
   ...
 } @ args: let
   compileArgs = denoPlatform.lib.generateFlags {
-    inherit permissions unstable entryPoint scriptArgs;
+    inherit permissions unstable include entryPoint scriptArgs;
     additionalDenoArgs = ["--output" binaryName] ++ additionalDenoArgs;
   };
 in

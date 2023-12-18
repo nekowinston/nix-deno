@@ -36,6 +36,7 @@
     entryPoint,
     permissions ? {},
     unstable ? false,
+    include ? [],
     additionalDenoArgs ? [],
     scriptArgs ? [],
   }:
@@ -45,6 +46,7 @@
         then "--unstable"
         else ""
       )
+      (builtins.map (import: "--include=" + import) include)
       (fromPermissionsAttrs permissions)
       additionalDenoArgs
       entryPoint
