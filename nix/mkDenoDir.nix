@@ -1,9 +1,11 @@
 {
+  fetchurl,
+  jq,
   lib,
   linkFarm,
-  writeText,
-  fetchurl,
   runCommand,
+  symlinkJoin,
+  writeText,
 }: {
   lockFile,
   npmRegistryUrl ? "https://registry.npmjs.org",
@@ -89,4 +91,23 @@
     ) (denoLock.packages.npm or {})
   );
 in
-  linkFarm "deno_prefetch" (npmDeps // remoteDeps)
+  symlinkJoin {
+    name = "deno_dir";
+    paths = [(linkFarm "deno_prefetch" (npmDeps // remoteDeps))];
+    propagatedBuildInputs = [jq];
+    postBuild = ''
+      if [ -d "$out/npm" ]; then
+        echo "deno_dir: Resolving NPM registry.json files"
+        shopt -s globstar
+
+        for registryJson in "$out/npm"/*/**/registry/*.json; do
+          dir="$(dirname "$registryJson")"
+          echo "> resolving $dir"
+          jq -s 'reduce .[] as $x ({}; . * $x)' "$dir"/*.json >"$dir/../registry.json"
+        done
+        rm -rf "$out/npm"/*/**/registry
+
+        echo "deno_dir: Finished resolving NPM registry.json files"
+      fi
+    '';
+  }
