@@ -13,10 +13,11 @@ Still a WIP, but here's what works / is done:
 
 - [x] `denoPlatform.mkDenoDir`: cache Deno dependencies in a pure Nix expression, no external scripts needed.
 - [x] scripts without dependencies.
-- [x] https://deno.land, https://esm.sh style dependencies.
-- [x] NPM dependencies, for the most part. I use this repo to build my [Lume](https://lume.land) website, which has a lot of NPM dependencies, but I'm 100% sure there will be edge cases.
+- [x] https://deno.land, https://esm.sh style dependencies. 
+- [x] NPM dependencies. I use this repo to build my [Lume](https://lume.land) website, which has lots of NPM dependencies, please open an issue if you run into NPM problems!
 - [x] `denoPlatform.mkDenoDerivation`: a basic `stdenv.mkDerivation` wrapper that handles dependencies for you.
-- [ ] helpers/builders for `deno compile`, or bundling.
+- [x] helper for `deno compile`.
+- [x] helper for `deno bundle`. Newer alternatives like `deno_emit` are still a TODO.
 - [ ] more helpful docs, right now, I'd suggest having a look at [`./ci.nix`](./ci.nix) for basic usage info.
 - [ ] a release.
 
