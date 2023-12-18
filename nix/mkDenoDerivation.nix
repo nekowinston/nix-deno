@@ -17,12 +17,17 @@ stdenv.mkDerivation ({
     buildInputs = [deno] ++ buildInputs;
 
     # setting the prefetch direcory for the cache restore hook
-    env.DENO_PREFETCH_DIR = denoPlatform.mkDenoDir {inherit lockFile npmRegistryUrl;};
-    env.NPM_CONFIG_REGISTRY = npmRegistryUrl;
+    env =
+      {
+        DENO_PREFETCH_DIR = denoPlatform.mkDenoDir {inherit lockFile npmRegistryUrl;};
+        NPM_CONFIG_REGISTRY = npmRegistryUrl;
+      }
+      // args.env or {};
 
     nativeBuildInputs = [denoPlatform.hooks.denoCacheRestoreHook] ++ nativeBuildInputs;
   }
   // (builtins.removeAttrs args [
     "buildInputs"
     "nativeBuildInputs"
+    "env"
   ]))
