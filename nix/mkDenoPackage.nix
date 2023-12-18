@@ -9,27 +9,24 @@
   entryPoint ? "main.ts",
   binaryName ? name,
   additionalDenoArgs ? [],
-  scriptArgs ? "",
   ...
 } @ args: let
   runtimeArgs = denoPlatform.lib.generateFlags {
-    inherit permissions unstable entryPoint additionalDenoArgs scriptArgs;
+    inherit permissions unstable additionalDenoArgs;
+    # since we're running a bundled script, the args are passed to the shebang rather than loading an entrypoint from the filesystem.
+    entryPoint = "";
   };
-  wrapper = ''
-    #!${lib.getExe deno} run ${runtimeArgs}
-
-    $out/${entryPoint} $scriptArgs
-  '';
 in
   denoPlatform.mkDenoDerivation ({
-      dontBuild = true;
+      # TODO: investigate other bundlers like `deno_emit`, since `deno bundle` is deprecated
+      buildPhase = ''
+        deno bundle ${entryPoint} "$TMPDIR"/${binaryName}
+      '';
 
       installPhase = ''
-        cp -r $src $out
-        chmod +w $out
-
         mkdir -p $out/bin
-        echo "${wrapper}" > $out/bin/${binaryName}
+        cp "$TMPDIR"/${binaryName} $out/bin/${binaryName}
+        sed -i -e "1i#!${lib.getExe deno} run ${runtimeArgs}" $out/bin/${binaryName}
         chmod +x $out/bin/${binaryName}
       '';
 
