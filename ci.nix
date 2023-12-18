@@ -50,11 +50,20 @@ in {
     '';
   };
 
-  cliffy = pkgs.denoPlatform.mkDenoBinary {
-    name = "cliffy";
+  cliffy-runtime = pkgs.denoPlatform.mkDenoPackage {
+    name = "cliffy-runtime";
     src = ./examples/cliffy;
 
     allow = ["all"];
+
+    entryPoint = "main.ts";
+  };
+
+  cliffy-binary = pkgs.denoPlatform.mkDenoBinary {
+    name = "cliffy";
+    src = ./examples/cliffy;
+
+    permissions.allow.net = "localhost:8080";
 
     entryPoint = "main.ts";
   };

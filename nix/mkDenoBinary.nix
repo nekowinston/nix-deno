@@ -4,25 +4,18 @@
   denoPlatform,
 }: {
   name,
-  allow ? [],
+  permissions ? {},
   unstable ? false,
   entryPoint ? "main.ts",
   binaryName ? name,
-  additionalFlags ? [],
-  scriptArguments ? "",
+  additionalDenoArgs ? [],
+  scriptArgs ? [],
   ...
 } @ args: let
-  compileArgs = builtins.concatStringsSep " " (lib.flatten [
-    (map (flag: "--allow-${flag}") allow)
-    "--output ${binaryName}"
-    (
-      if unstable
-      then "--unstable"
-      else ""
-    )
-    entryPoint
-    scriptArguments
-  ]);
+  compileArgs = denoPlatform.lib.generateFlags {
+    inherit permissions unstable entryPoint scriptArgs;
+    additionalDenoArgs = ["--output" binaryName] ++ additionalDenoArgs;
+  };
 in
   denoPlatform.mkDenoDerivation ({
       # fixup corrupts the binary, leaving it in a Deno REPL-only state
@@ -34,4 +27,4 @@ in
       # default to Deno's platforms
       meta.platforms = deno.meta.platforms;
     }
-    // args)
+    // (builtins.removeAttrs args ["permissions"]))
