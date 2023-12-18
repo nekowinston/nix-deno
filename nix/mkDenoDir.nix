@@ -31,18 +31,17 @@
         in
           sanitizeDerivationName (lib.concatStringsSep "-" [(up 1) (lib.strings.removePrefix "/" (up 2))]);
         assumedContentTypes = {
-          ".js" = "application/javascript";
-          ".jsx" = "application/javascript";
-          ".cjs" = "application/javascript";
-          ".mjs" = "application/javascript";
-          ".json" = "application/json";
-          ".ts" = "application/typescript";
-          ".mts" = "application/typescript";
-          ".tsx" = "application/typescript";
-          ".css" = "text/css";
-          ".wasm" = "application/wasm";
+          "js" = "application/javascript";
+          "jsx" = "application/javascript";
+          "cjs" = "application/javascript";
+          "mjs" = "application/javascript";
+          "json" = "application/json";
+          "ts" = "application/typescript";
+          "tsx" = "application/typescript";
+          "cts" = "application/typescript";
+          "mts" = "application/typescript";
+          "wasm" = "application/wasm";
         };
-        isEsmDep = url: lib.hasPrefix "https://esm.sh/" url;
         assumedContentType = url: let
           ext = lib.last (builtins.split "\\." url);
         in
@@ -58,10 +57,7 @@
         };
         "deps/${linkName}.metadata.json" = writeText "${name}.metadata.json" (builtins.toJSON {
           inherit url;
-          headers =
-            if (isEsmDep url)
-            then {"content-type" = assumedContentType url;}
-            else {};
+          headers."content-type" = assumedContentType url;
         });
       }
     )
