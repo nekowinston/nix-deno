@@ -1,0 +1,16 @@
+# esbuild binary downloads for the Fresh build
+[esbuild-aarch64-linux]
+src.manual = "0.19.4"
+fetch.tarball = "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-$ver.tgz"
+
+[esbuild-x86_64-linux]
+src.manual = "0.19.4"
+fetch.tarball = "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-$ver.tgz"
+
+[esbuild-aarch64-darwin]
+src.manual = "0.19.4"
+fetch.tarball = "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-$ver.tgz"
+
+[esbuild-x86_64-darwin]
+src.manual = "0.19.4"
+fetch.tarball = "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-$ver.tgz"

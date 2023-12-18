@@ -12,7 +12,7 @@
   in {
     devShells = eachSystem (pkgs: {
       default = pkgs.mkShell {
-        buildInputs = with pkgs; [alejandra deno nil shellcheck shfmt];
+        buildInputs = with pkgs; [alejandra deno nil nvfetcher shellcheck shfmt];
       };
     });
 

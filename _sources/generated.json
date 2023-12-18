@@ -1,0 +1,58 @@
+{
+    "esbuild-aarch64-darwin": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "esbuild-aarch64-darwin",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "sha256-mtCCgWZi2wdbgz0gRYLP/GZfgJ/UKLnPTBvc5pxpk9g=",
+            "type": "tarball",
+            "url": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.19.4.tgz"
+        },
+        "version": "0.19.4"
+    },
+    "esbuild-aarch64-linux": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "esbuild-aarch64-linux",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "sha256-0UNPha4R8O8cCDiddB6755asI8eFzZT/wvwrN7xEKPo=",
+            "type": "tarball",
+            "url": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.19.4.tgz"
+        },
+        "version": "0.19.4"
+    },
+    "esbuild-x86_64-darwin": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "esbuild-x86_64-darwin",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "sha256-6vGfZgKyZw0DHkov07UYsIIGIy8DyeDvcn6qZSPTDxU=",
+            "type": "tarball",
+            "url": "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.19.4.tgz"
+        },
+        "version": "0.19.4"
+    },
+    "esbuild-x86_64-linux": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "esbuild-x86_64-linux",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "sha256-Cf8siblPU9rrTajm88VYibOSIimM2Of0kQudINeOrew=",
+            "type": "tarball",
+            "url": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.19.4.tgz"
+        },
+        "version": "0.19.4"
+    }
+}
