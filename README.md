@@ -31,11 +31,13 @@ Deno Project
 │
 ├── main.ts       # The main TypeScript file for your Deno application
 ├── deno.json     # The Deno project configuration file
-└── deno.lock     # A lock file for managing dependencies
+├── deno.lock     # A lock file for managing dependencies
+└── flake.nix     # The flake under discussion below
 ```
 
 
 ### Building an Executable
+
 Here's a complete flake.nix example for building an executable for a typical Deno project:
 
 ```nix
@@ -64,7 +66,7 @@ Here's a complete flake.nix example for building an executable for a typical Den
 ```
 
 #### Generating Artifacts
-For projects that generate artifacts (e.g. PDFs), you might have a deno.json like:
+For projects that generate artifacts (in this example a deno app which generates a folder of pdf files), you might have a deno.json like:
 
 ```json
 {
@@ -82,7 +84,7 @@ In which case your flake.nix might look like this:
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nix-deno.url = "github:nekowinston/nix-deno";
 
-  outputs = { self, nixpkgs, flake-utils, nix-deno, ... } @ inputs:
+  outputs = { self, nixpkgs, flake-utils, ... } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
         inherit system;
@@ -93,7 +95,7 @@ In which case your flake.nix might look like this:
         name = "pdfGen";
         version = "0.1.2";
         src = ./.;
-        buildInputs = [ pkgs.xdg-utils ];
+        buildInputs = [ pkgs.xdg-utils ]; # assuming reliance on xdg-utils
         buildPhase = ''
           mkdir -p $out
           deno task buildPdfs
@@ -108,11 +110,12 @@ In which case your flake.nix might look like this:
 ```
 
 ## Building and Running Your Project
+
 Build the Project: Execute `nix build` in your project directory. This will build the project based on the flake.nix configuration.
 
 ### Run the Executable or Access Artifacts:
 
-If you do not override the buildPhase like the `example-executable`, after building you can run `./result/bin/example-executable`.
+If you do not override the buildPhase (like we have not, in the `example-executable`), after building you can run `./result/bin/example-executable`.
 
 The example with the `pdfGen` overrides the `buildPhase` and `installPhase`, so you will only see whatever is copied into the `$out` folder manually (some pdfs in this case).
 
