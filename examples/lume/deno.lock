@@ -30,7 +30,7 @@
       "linkify-it@5.0.0": {
         "integrity": "sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==",
         "dependencies": {
-          "uc.micro": "uc.micro@2.0.0"
+          "uc.micro": "uc.micro@2.1.0"
         }
       },
       "markdown-it-attrs@4.1.6_markdown-it@14.0.0": {
@@ -51,7 +51,7 @@
           "linkify-it": "linkify-it@5.0.0",
           "mdurl": "mdurl@2.0.0",
           "punycode.js": "punycode.js@2.3.1",
-          "uc.micro": "uc.micro@2.0.0"
+          "uc.micro": "uc.micro@2.1.0"
         }
       },
       "mdurl@2.0.0": {
@@ -66,8 +66,8 @@
         "integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==",
         "dependencies": {}
       },
-      "uc.micro@2.0.0": {
-        "integrity": "sha512-DffL94LsNOccVn4hyfRe5rdKa273swqeA5DJpMOeFmEn1wCDc7nAbbB0gXlgBCL7TNzeTv6G7XVWzan7iJtfig==",
+      "uc.micro@2.1.0": {
+        "integrity": "sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==",
         "dependencies": {}
       }
     }
@@ -204,6 +204,7 @@
     "https://deno.land/std@0.208.0/http/file_server.ts": "8a2035a1130fab717a103375d85bf99b25ee27bede8d5a4b3ead2ece24de8b6e",
     "https://deno.land/std@0.208.0/http/status.ts": "dcbcc0f048ba8fad81228ac66e4a984c924a28c05701dddd20e0f005681d932f",
     "https://deno.land/std@0.208.0/io/buf_writer.ts": "599247add52c1f42c3674366d5783a25c69ceb7277b0694cc854d49f5710e77f",
+    "https://deno.land/std@0.208.0/json/common.ts": "ecd5e87d45b5f0df33238ed8b1746e1444da7f5c86ae53d0f0b04280f41a25bb",
     "https://deno.land/std@0.208.0/jsonc/mod.ts": "b88dce28eb3645667caa856538ae2fe87af51410822544a0b45a4177ef3bd7dd",
     "https://deno.land/std@0.208.0/jsonc/parse.ts": "6048912a52d1ee3876a89f57ae6885f3b675bf2708700ef8d3d72acf6ef3342e",
     "https://deno.land/std@0.208.0/log/handlers.ts": "3a0883f65567f59a9a88e44c972b24b924621bc28ead91af11d7a6da93c4a64c",

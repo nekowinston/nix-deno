@@ -2,6 +2,9 @@
 import color from "npm:chalk@5.3.0";
 import "npm:chalk@5.2.0";
 
+// check if weird non-semver versions work
+import "npm:tailwindcss@insiders";
+
 const ascii = [
   color.green("╺┳┓┏━╸┏┓╻┏━┓ ╻  ┏━┓┏┓╻╺┳┓"),
   color.green(" ┃┃┣╸ ┃┗┫┃ ┃ ┃  ┣━┫┃┗┫ ┃┃"),
