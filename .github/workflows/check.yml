@@ -3,9 +3,9 @@ name: Check Nix expressions
 on:
   push:
     branches: [main]
-    paths: ["**.nix"]
+    paths: ["**.nix", "**.lock"]
   pull_request:
-    paths: ["**.nix"]
+    paths: ["**.nix", "**.lock"]
   workflow_dispatch:
 
 jobs:
