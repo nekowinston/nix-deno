@@ -71,7 +71,7 @@
     lib.mapAttrsToList (
       specifier: data: let
         inherit (builtins) head match elemAt;
-        pkgNameAndVersion = match "(^@?[[:alnum:]/._-]+)@([[:digit:].]+[-[:alnum:]]*).*" specifier;
+        pkgNameAndVersion = match "(^@?[[:alnum:]/._-]+)@([[:alnum:].-]+).*" specifier;
         pkgName = head pkgNameAndVersion;
         version = elemAt pkgNameAndVersion 1;
         tarballUrl = "${npmRegistryUrl}/${pkgName}/-/${builtins.baseNameOf pkgName}-${version}.tgz";
