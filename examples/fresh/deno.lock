@@ -1,7 +1,7 @@
 {
   "version": "3",
   "redirects": {
-    "https://esm.sh/v135/@types/babel__helper-validator-identifier@^7/index.d.ts": "https://esm.sh/v135/@types/babel__helper-validator-identifier@7.15.2/index.d.ts"
+    "https://esm.sh/v135/@types/babel__helper-validator-identifier@~7/index.d.ts": "https://esm.sh/v135/@types/babel__helper-validator-identifier@7.15.2/index.d.ts"
   },
   "remote": {
     "https://deno.land/std@0.140.0/_util/assert.ts": "e94f2eb37cebd7f199952e242c77654e43333c1ac4c5c700e929ea3aa5489f74",
@@ -370,7 +370,7 @@
     "https://deno.land/x/ts_morph@20.0.0/common/typescript.js": "b9edf0a451685d13e0467a7ed4351d112b74bd1e256b915a2b941054e31c1736",
     "https://deno.land/x/ts_morph@20.0.0/mod.ts": "adba9b82f24865d15d2c78ef6074b9a7457011719056c9928c800f130a617c93",
     "https://deno.land/x/ts_morph@20.0.0/ts_morph.js": "ea8c6d40a5a30ea2d720ef289b7cc817d3be3d0010587c197ea4419026943e0e",
-    "https://esm.sh/*@preact/signals-core@1.5.0": "6c6d13a0ae3fc1e32f7dd85e327381b3dce82d770e8a718fe297ee5f02c7b2ff",
+    "https://esm.sh/*@preact/signals-core@1.5.0": "5db7d41e0a1d5209602191d05cce46730801bea18b4c3240c9a39f1d420af33b",
     "https://esm.sh/*@preact/signals@1.2.1": "d34afc8f724c0fd0f2f269b0d64d1c1452af16acddbaaeaace20648df0399ee5",
     "https://esm.sh/*preact-render-to-string@6.3.1": "07807f027acf54b994b630bbb2a923f5a835f9544e01144f67ab292e90a431e4",
     "https://esm.sh/@babel/helper-validator-identifier@7.22.20": "daace34e028130297fddf97f3ef6deb4b05ec3eb46f5c5cacd6eaa43d6323b0a",
@@ -384,7 +384,7 @@
     "https://esm.sh/stable/preact@10.19.2/denonext/jsx-runtime.js": "f196c14042fc6019f3fed31eec7cfedea4669d0926858939380a5f54bd503798",
     "https://esm.sh/stable/preact@10.19.2/denonext/preact.mjs": "dc999b6432dc04d74ad7b692a8801f346294d815266dff915d0f222c120fd0b0",
     "https://esm.sh/v135/@babel/helper-validator-identifier@7.22.20/denonext/helper-validator-identifier.mjs": "1ad312a9040d1f3b096e90a3e6a9da7ecfc99662140852fe3862a316c2591c93",
-    "https://esm.sh/v135/@preact/signals-core@1.5.0/X-ZS8q/denonext/signals-core.mjs": "69a658490da1b25f2f8d4476c45e7f1f45e08a04a0418119ab3d3b574d77b96a",
+    "https://esm.sh/v135/@preact/signals-core@1.5.0/denonext/signals-core.mjs": "69a658490da1b25f2f8d4476c45e7f1f45e08a04a0418119ab3d3b574d77b96a",
     "https://esm.sh/v135/@preact/signals@1.2.1/X-ZS8q/denonext/signals.mjs": "90531451d474fa35205f5f54e512ed566093722cb2a004316dc7b8d4b8122961",
     "https://esm.sh/v135/preact-render-to-string@6.3.1/X-ZS8q/denonext/preact-render-to-string.mjs": "bcaceb8c3938310aee3dd4f7b6f2136cf0b2b890988c2e6679485e052e76e920"
   }
