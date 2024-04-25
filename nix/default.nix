@@ -1,6 +1,6 @@
 final: prev: {
   denoPlatform = {
-    mkDenoBinary = final.callPackage ./mkDenoBinary.nix {};
+    # mkDenoBinary = final.callPackage ./mkDenoBinary.nix {};
     mkDenoDerivation = final.callPackage ./mkDenoDerivation.nix {};
     mkDenoDir = final.callPackage ./mkDenoDir.nix {};
     mkDenoPackage = final.callPackage ./mkDenoPackage.nix {};

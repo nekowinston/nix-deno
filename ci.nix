@@ -85,12 +85,12 @@ in {
     permissions.allow.all = true;
   };
 
-  cliffy-binary = pkgs.denoPlatform.mkDenoBinary {
-    name = "cliffy";
-    src = ./examples/cliffy;
-
-    permissions.allow.net = "localhost:8080";
-  };
+  # cliffy-binary = pkgs.denoPlatform.mkDenoBinary {
+  #   name = "cliffy";
+  #   src = ./examples/cliffy;
+  #
+  #   permissions.allow.net = "localhost:8080";
+  # };
 
   webview = pkgs.denoPlatform.mkDenoBinary {
     name = "webview";

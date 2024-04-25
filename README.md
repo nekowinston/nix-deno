@@ -53,7 +53,7 @@ Here's a complete flake.nix example for building an executable for a typical Den
         overlays = [ inputs.nix-deno.overlays.default ];
       };
     in {
-      packages.example-executable = pkgs.denoPlatform.mkDenoBinary {
+      packages.example-executable = pkgs.denoPlatform.mkDenoPackage {
         name = "example-executable";
         version = "0.1.2";
         src = ./.;
