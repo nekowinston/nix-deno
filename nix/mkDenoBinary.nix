@@ -2,6 +2,7 @@
   lib,
   deno,
   denoPlatform,
+  unzip,
 }: {
   name,
   permissions ? {},
@@ -23,6 +24,7 @@ in
       dontFixup = true;
 
       buildPhase = "deno compile ${compileArgs}";
+      buildInputs = [unzip];
       installPhase = "install -Dm755 ${binaryName} $out/bin/${binaryName}";
 
       # default to Deno's platforms
