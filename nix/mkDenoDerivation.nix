@@ -11,23 +11,21 @@
   nativeBuildInputs ? [],
   npmRegistryUrl ? "https://registry.npmjs.org",
   stdenv ? inputs.stdenv,
+  denoDeps ? denoPlatform.mkDenoDir {inherit lockFile npmRegistryUrl;},
   ...
-} @ args:
-stdenv.mkDerivation ({
-    buildInputs = [deno] ++ buildInputs;
+} @ args: let
+  inherit (denoPlatform.hooks) denoCacheRestoreHook;
+in
+  stdenv.mkDerivation (args
+    // {
+      # setting the prefetch direcory for the cache restore hook
+      inherit denoDeps npmRegistryUrl;
+      env.NPM_CONFIG_REGISTRY = npmRegistryUrl;
 
-    # setting the prefetch direcory for the cache restore hook
-    env =
-      {
-        DENO_PREFETCH_DIR = denoPlatform.mkDenoDir {inherit lockFile npmRegistryUrl;};
-        NPM_CONFIG_REGISTRY = npmRegistryUrl;
-      }
-      // args.env or {};
+      nativeBuildInputs = nativeBuildInputs ++ [deno denoCacheRestoreHook];
+      buildInputs = buildInputs ++ [deno];
 
-    nativeBuildInputs = [denoPlatform.hooks.denoCacheRestoreHook] ++ nativeBuildInputs;
-  }
-  // (builtins.removeAttrs args [
-    "buildInputs"
-    "nativeBuildInputs"
-    "env"
-  ]))
+      strictDeps = true;
+
+      meta = (args.meta or {}) // {platforms = args.meta.platforms or deno.meta.platforms;};
+    })
