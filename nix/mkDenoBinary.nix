@@ -22,7 +22,7 @@ in
       # fixup corrupts the binary, leaving it in a Deno REPL-only state
       dontFixup = true;
 
-      buildPhase = "deno compile ${compileArgs}";
+      buildPhase = "DENORT_BIN=${deno}/bin/denort deno compile ${compileArgs}";
       installPhase = "install -Dm755 ${binaryName} $out/bin/${binaryName}";
 
       # default to Deno's platforms
