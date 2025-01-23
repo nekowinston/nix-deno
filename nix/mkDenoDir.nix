@@ -112,7 +112,7 @@
         "npm/${npmRegistryUrlSlug}/${pkgName}/${version}" = unpacked;
         "npm/${npmRegistryUrlSlug}/${pkgName}/registry/${version}.json" = writeText "${drvName}-registry.json" registryData;
       }
-    ) (denoLock.packages.npm or {})
+    ) ((if denoLock.version == "4" then denoLock.npm else denoLock.packages.npm) or {})
   );
 in
   symlinkJoin {
