@@ -1,3 +1,6 @@
+> [!WARNING]  
+> This flake is archived in favor of https://github.com/NixOS/nixpkgs/pull/407434 or whichever implementation makes it into upstream nixpkgs.
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./.github/assets/nix-deno-dark.webp" width="250">
